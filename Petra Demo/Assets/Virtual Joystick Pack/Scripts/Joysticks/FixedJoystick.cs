@@ -28,15 +28,32 @@ public class FixedJoystick : Joystick
         } else {
             playerMovement.Rotate(handle.anchoredPosition.x);
         }
+
+        //if (handle.anchoredPosition.y > 5)
+        //    playerMovement.anim.SetBool("isForward", true);
+        //if (handle.anchoredPosition.y < -5)
+        //    playerMovement.anim.SetBool("isBackward", true);
+
+        //if (handle.anchoredPosition.x > 5)
+        //    playerMovement.anim.SetBool("isRight", true);
+        //if (handle.anchoredPosition.x < -5)
+        //    playerMovement.anim.SetBool("isLeft", true);
     }
 
     public override void OnPointerDown(PointerEventData eventData)
     {
+
+        
+
         OnDrag(eventData);
+        print(handle.anchoredPosition);
     }
 
     public override void OnPointerUp(PointerEventData eventData)
     {
+        playerMovement.anim.SetFloat("speed", 0);
+        playerMovement.anim.SetFloat("horizontal", 0);
+
         inputVector = Vector2.zero;
         handle.anchoredPosition = Vector2.zero;
     }

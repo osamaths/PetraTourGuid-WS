@@ -13,8 +13,11 @@ public class CharacterActions : MonoBehaviour {
     internal bool detectEnemy;
     private string clickedBtn = "";
 
+    Animator anim;
+    
     // Use this for initialization
     void Start () {
+        anim = transform.GetComponent<Animator>();
         enemyHealthManager = GameObject.FindWithTag(targetTag).GetComponent<HealthManager>();
 	}
 	
@@ -60,13 +63,22 @@ public class CharacterActions : MonoBehaviour {
         yield return new WaitForSeconds(ACTION_DELAY);
         actionDelay = true;
     }
-
+    void setAttack()
+    {
+        anim.SetBool("underAttack", false);
+    }
     public void Attack()
     {
         if (!actionDelay)
             return;
 
         StartCoroutine(waitActions());
+        anim.SetBool("isAttack", true);
+        anim.SetBool("underAttack", true);
+
+        Invoke("setAttack", 1f);
+
+        //anim.SetBool("isAttack", false);
         print("Attack " + gameObject.name);
         if (successAttack)
         {
@@ -82,6 +94,8 @@ public class CharacterActions : MonoBehaviour {
             return;
 
         StartCoroutine(waitActions());
+        anim.SetBool("isAvoid", true);
+
         print("Avoid " + gameObject.name);
         // play animation here
         // play voice here
