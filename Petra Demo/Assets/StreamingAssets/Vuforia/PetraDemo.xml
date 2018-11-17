@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
-    <ImageTarget name="Petra" size="1024.000000 768.000000" />
+    <ImageTarget name="jerash" size="1.000000 0.567000" />
+    <ImageTarget name="Petra" size="1.000000 0.562500" />
+    <ImageTarget name="Roman-Theater-Tour" size="1.000000 0.601449" />
   </Tracking>
 </QCARConfig>

@@ -7,9 +7,10 @@ public class CharacterActions : MonoBehaviour {
     public float attackDistance;
     public string targetTag;
 
-    private float actionDelay = 0f;
+    private bool actionDelay = true;
     HealthManager enemyHealthManager;
     private bool successAttack;
+    internal bool detectEnemy;
     private string clickedBtn = "";
 
     // Use this for initialization
@@ -19,15 +20,12 @@ public class CharacterActions : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (actionDelay > 0)
-            actionDelay -= Time.deltaTime;
-
         CheckForEnemy();
 	}
 
     void CheckForEnemy()
     {
-        if (actionDelay != 0)
+        if (!actionDelay)
             return;
 
         RaycastHit hit;
@@ -37,24 +35,39 @@ public class CharacterActions : MonoBehaviour {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             if (hit.transform.tag == targetTag)
             {
-                if (clickedBtn == "attack")
+                detectEnemy = true;
+                if (targetTag == "Player")
                 {
                     successAttack = true;
+                } else
+                {
+                    if (clickedBtn == "attack")
+                    {
+                        successAttack = true;
+                    }
                 }
-            } else if (successAttack)
-            {
-                successAttack = false;
             }
+        } else
+        {
+            successAttack = false;
+            detectEnemy = false;
         }
+    }
+
+    IEnumerator waitActions()
+    {
+        actionDelay = false;
+        yield return new WaitForSeconds(ACTION_DELAY);
+        actionDelay = true;
     }
 
     public void Attack()
     {
-        if (actionDelay != 0)
+        if (!actionDelay)
             return;
 
-        actionDelay = ACTION_DELAY;
-        print("Attack");
+        StartCoroutine(waitActions());
+        print("Attack " + gameObject.name);
         if (successAttack)
         {
             successAttack = false;
@@ -65,17 +78,17 @@ public class CharacterActions : MonoBehaviour {
     }
     public void Avoid()
     {
-        if (actionDelay != 0)
+        if (!actionDelay)
             return;
 
-        actionDelay = ACTION_DELAY;
-        print("Avoid");
+        StartCoroutine(waitActions());
+        print("Avoid " + gameObject.name);
         // play animation here
         // play voice here
     }
     void Die()
     {
-        actionDelay = ACTION_DELAY;
+        StartCoroutine(waitActions());
         transform.GetComponent<HealthManager>().isDead = true;
         print("Dead");
         // play animation here
