@@ -12,6 +12,9 @@ public class EnemyMovementAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (player.GetComponent<HealthManager>().isDead || transform.GetComponent<HealthManager>().isDead)
+            return;
+
         TrackPlayer();
 	}
 
