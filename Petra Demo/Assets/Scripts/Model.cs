@@ -15,6 +15,11 @@ public class Model : MonoBehaviour {
         transform.GetComponent<AudioSource>().Play();
     }
 
+    internal void stopPlaying()
+    {
+        GetComponent<AudioSource>().Stop();
+    }
+
 
     //[System.Serializable]
     //public class ModelAudio
