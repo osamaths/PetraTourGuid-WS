@@ -1,30 +1,44 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Model : MonoBehaviour {
-    //public string name;
-    //public GameObject model;
-    //public string description;
+public class Model : MonoBehaviour
+{
+   
     public AudioClip audio;
-
-    internal void playAudio()
+    bool isActiveSound = false;
+    public void playAudio()
     {
         transform.GetComponent<AudioSource>().clip = audio;
         transform.GetComponent<AudioSource>().Play();
     }
-
-    internal void stopPlaying()
+  public void stopPlaying()
     {
-        GetComponent<AudioSource>().Stop();
+        transform.GetComponent<AudioSource>().Stop();
     }
 
 
-    //[System.Serializable]
-    //public class ModelAudio
-    //{
-    //    public AudioClip audio;
-    //    public string language;
-    //}
+
+public void TrigerSound()
+{
+    isActiveSound = !isActiveSound;
+    ActiveSound();
+}
+
+void ActiveSound()
+{
+    if (isActiveSound)
+    {
+
+        print("isActiveSound" + isActiveSound);
+        transform.GetComponent<Model_>().playAudio();
+    }
+    else
+    {
+        transform.GetComponent<Model_>().stopPlaying();
+
+    }
+}
+    
+
 }
